@@ -15,7 +15,7 @@
     <div id="container">
         <?php foreach ($books as $book) : ?>
             <div id="column">
-                <a href="../details/details.php?book_id=<?php echo $book['book_id']; ?>">
+                <a href="">
                     <img src="<?php echo $book['book_image'] ?>"></a>
 
                 <h2><?php echo ucfirst(strtolower($book['book_name'])) ?></h2>
@@ -23,9 +23,6 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <?php foreach ($author_books as $author_book) : ?>
-        <h2><?php echo $author_book['book_name']; ?></h2>
-    <?php endforeach; ?>
 </body>
 
 </html>
