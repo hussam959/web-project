@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.details {
+  display: flex;
+  margin: 60px 50px;
+}
+.image {
+  min-height: 50vh;
+}
+.image img {
+  height: 550px;
+  width: 400px;
+  border: 1px;
+  border-radius: 3px solid white;
+  object-fit: fill;
+  margin-right: 20px;
+}
+.column {
+  height: 30vh;
+}
