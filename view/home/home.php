@@ -5,7 +5,7 @@
 <head>
     <title>Home Page</title>
     <style>
-        <?php include_once "../home/css/home_style.css"; ?>
+        <?php include "../home/css/home_style.css"; ?>
     </style>
 </head>
 
