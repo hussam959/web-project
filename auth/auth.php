@@ -49,6 +49,7 @@ function signIn($email, $password)
     $result = mysqli_query($con, $sql);
     $user = mysqli_fetch_assoc($result);
     if ($user) {
+        define("USER_ID", $user['user_id']);
         session_start();
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
