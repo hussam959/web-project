@@ -52,6 +52,7 @@ function signIn($email, $password)
         session_start();
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
+        $_SESSION['user_id'] = $user['user_id'];
         header("Location: ../view/home/home.php");
         exit();
     } else {

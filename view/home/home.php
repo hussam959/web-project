@@ -14,8 +14,6 @@
 
 <body>
     <?php $books = getAllBooks(); ?>
-    <?php $author_books = getAuthorBooks("yiran park"); ?>
-
     <?php if (isset($_POST['search-submit'])) : ?>
         <?php $text = $_POST['search']; ?>
         <?php $searched_books = searchBook($text); ?>

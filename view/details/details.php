@@ -10,14 +10,54 @@
 
 <body>
     <?php $bookId = $_GET['book_id']; ?>
+    <?php session_start();
+    $userId = $_SESSION['user_id'];  ?>
     <?php $bookData = getBookBYId($bookId); ?>
+    <?php $authorBooks = getAuthorBooks($bookData['book_author']); ?>
+    <?php if (isset($_POST['submit'])) : ?>
+        <?php addToCart($bookId, $userId) ?>
+    <?php endif; ?>
     <div class="details">
         <div class="image">
             <img src="<?php echo $bookData['book_image']; ?>">
         </div>
-        <div id="column">
-            <h1><?php echo $bookData['book_description']; ?></h1>
+        <div class="column">
+            <h2 style="font-weight: bold;"><?php echo $bookData['book_name']; ?></h2>
+            <p class="disc"><?php echo $bookData['book_description']; ?></p>
+            <table class="book_details">
+                <tr>
+                    <th>Author</th>
+                    <td>
+                        <label>
+                            <?php echo ucfirst($bookData['book_author']); ?>
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Genre</th>
+                    <td><?php echo ucfirst($bookData['book_genre']); ?></td>
+                </tr>
+                <tr>
+                    <th>First Publish</th>
+                    <td><?php echo $bookData['book_year']; ?></td>
+                </tr>
+            </table>
+            <form method="post">
+                <input class="button" type="submit" name="submit" value="Add To Cart">
+            </form>
         </div>
+
+    </div>
+    <div class="authorcontainer">
+        <h2 class="h2">Other Author Books</h2>
+        <?php foreach ($authorBooks as $book) : ?>
+            <?php if ($bookId != $book['book_id']) : ?>
+                <div class="authorcolumn">
+
+                    <img src="<?php echo $book['book_image'] ?>">
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
     </div>
 
 </body>
