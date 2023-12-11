@@ -62,9 +62,6 @@
   cursor: pointer;
   color: white;
 }
-.search-form button i{
-  font-size: 30px;
-}
 #err-search{
   display: none;
   margin-top: 5px;

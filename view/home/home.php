@@ -37,14 +37,12 @@
         <?php foreach ($books as $book) : ?>
             <div id="column">
                 <a href="../details/details.php?book_id=<?php echo $book['book_id'] ?>">
-                    <img src="<?php echo $book['book_image'] ?>"></a>
-
+                    <img src="../../images/<?php echo $book['book_image'] ?>"></a>
                 <h2><?php echo ucfirst(strtolower($book['book_name'])) ?></h2>
                 <h4><?php echo round($book['book_price']) . "$" ?></h4>
             </div>
         <?php endforeach; ?>
     </div>
-
 </body>
 
 </html>

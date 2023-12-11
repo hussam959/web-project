@@ -54,7 +54,11 @@ function signIn($email, $password)
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['user_id'] = $user['user_id'];
-        header("Location: ../view/home/home.php");
+        if($user['email'] == "admin@gmail.com" && $user['name'] == "admin"){
+            header('Location: ../view/dashboard/dashboard.php');
+        }else{
+            header('Location: ../view/home/home.php');
+        }
         exit();
     } else {
         header("Location: login.php");

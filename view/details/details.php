@@ -19,7 +19,7 @@
     <?php endif; ?>
     <div class="details">
         <div class="image">
-            <img src="<?php echo $bookData['book_image']; ?>">
+            <img src="../../images/<?php echo $bookData['book_image']; ?>">
         </div>
         <div class="column">
             <h2 style="font-weight: bold;"><?php echo $bookData['book_name']; ?></h2>
@@ -54,7 +54,7 @@
             <?php if ($bookId != $book['book_id']) : ?>
                 <div class="authorcolumn">
 
-                    <img src="<?php echo $book['book_image'] ?>">
+                    <img src="../../images/<?php echo $book['book_image'] ?>">
                 </div>
             <?php endif; ?>
         <?php endforeach; ?>
