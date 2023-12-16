@@ -1,69 +1,70 @@
 <?php
+require "../auth/auth_func.php";
+?>
+<!DOCTYPE html>
+<html>
 
-require "../shared/config.php";
+<head>
+  <title>Login Page</title>
+  <style>
+    <?php require '../auth/css/auth_styles.css'; ?>
+  </style>
+</head>
 
+<body>
 
-function checkUser($name, $email)
-{
-    global $con;
-    $sqlEmailCheck = <<<SQL
-    SELECT * FROM users
-    WHERE email = '$email'
-    SQL;
-    $sqlNameCheck = <<<SQL
-    SELECT * FROM users
-    WHERE name = '$name'
-    SQL;
-    $nameCheck = mysqli_query($con, $sqlNameCheck);
-    $emailCheck = mysqli_query($con, $sqlEmailCheck);
-    if (mysqli_num_rows($nameCheck) > 0 || mysqli_num_rows($emailCheck) > 0) {
-        return true; // user found
-    }
-    return false; // user not found
-}
+  <!-- Login -->
+  <?php if (isset($_POST['sign-in'])) : ?>
+    <?php $email = $_POST['email']; ?>
+    <?php $password = $_POST['password']; ?>
+    <?php signIn($email, $password); ?>
+  <?php endif; ?>
+  <!-- Register -->
+  <?php if (isset($_POST['sign-up'])) : ?>
+    <?php $name = $_POST['name'] ?>
+    <?php $email = $_POST['email']; ?>
+    <?php $password = $_POST['password']; ?>
+    <?php createUser($name, $email, $password); ?>
+  <?php endif; ?>
 
-function createUser($name, $email, $password)
-{
-    if (checkUser($name, $email) == false) {
-        global $con;
-        $sql = <<<SQL
-            INSERT INTO users (name, email, password)
-            VALUES ('$name', '$email', '$password')
-            SQL;
-        mysqli_query($con, $sql);
-        header("Location: login.php");
-        exit();
-    }else{
-        header("Location: register.php");
-        exit();
-    }
-}
+  <div class="container" id="container">
+    <div class="form-container sign-up">
+      <form id="authform" action="" method="post">
+        <h1 id="loginheader">Create Account</h1>
+        <span>Use your email for registeration</span>
+        <input type="text" name="name" required placeholder="name">
+        <input type="email" name="email" required placeholder="Email">
+        <input type="password" name="password" minlength="8" required placeholder="Password">
 
-function signIn($email, $password)
-{
-    global $con;
-    $sql = <<<SQL
-    SELECT * FROM users 
-    WHERE email='$email' and password='$password'
-    SQL;
-    $result = mysqli_query($con, $sql);
-    $user = mysqli_fetch_assoc($result);
-    if ($user) {
-        define("USER_ID", $user['user_id']);
-        session_start();
-        $_SESSION['name'] = $user['name'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['user_id'] = $user['user_id'];
-        if($user['email'] == "admin@gmail.com" && $user['name'] == "admin"){
-            header('Location: ../view/dashboard/dashboard.php');
-        }else{
-            header('Location: ../view/home/home.php');
-        }
-        exit();
-    } else {
-        header("Location: login.php");
-        echo "User: $user";
-        exit();
-    }
-    return $user;
-}
+        <input id="authButton" name="sign-up" type="submit" value="Sign Up" />
+      </form>
+    </div>
+    <div class="form-container sign-in">
+      <form id="authform" action="" method="post">
+        <h1 id="loginheader">Sign In</h1>
+        <span>Use your email and password</span>
+        <input type="email" name="email" required placeholder="Email">
+        <input type="password" name="password" minlength="8" required placeholder="Password">
+
+        <input id="authButton" name="sign-in" type="submit" value="Sign In" />
+      </form>
+    </div>
+    <div class="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back</h1>
+          <p>Enter your personal details</p>
+          <button class="hidden" id="login">Sign In</button>
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Hello Friend</h1>
+          <p>Register with your personal details</p>
+          <button class="hidden" id="register">Sign Up</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"> </script>
+</body>
+
+</html>

@@ -43,6 +43,7 @@
   margin-right: 16px;
   font-size: 24px;
 }
+/**/
 .content {
   margin-left: 280px;
   display: flex;
@@ -63,9 +64,11 @@
 .content table td {
   color: gray;
 }
+/**/
 .delete {
   margin-left: 280px;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .delete table {
   table-layout: auto;
@@ -98,7 +101,7 @@
 
 .insert {
   margin-left: 280px;
-  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .insert table {
   table-layout: auto;
@@ -138,14 +141,14 @@
 }
 .insert input[type=submit]{
     text-align: center;
-    height: 35px;
+    height: 40px;
+    width: 120px;
     display: block;
     margin: auto;
-    position: relative;
     background-color: green;
     border: 1px solid green;
     border-radius: 20px;
     color: white;
-    padding: 5px;
+    padding: 2px;
     font-size: 20px;
 }

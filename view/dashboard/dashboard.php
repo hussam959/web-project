@@ -4,7 +4,7 @@
 
 <head>
     <style>
-        <?php include_once("css/styles.css"); ?>
+        <?php include_once("css/dash_borad_style.css"); ?>
     </style>
     <?php
     echo "<link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons'>";
@@ -15,28 +15,36 @@
 </head>
 
 <body>
+
     <?php $numberOfBooks = getNumberofBooks(); ?>
     <?php $numberOfUsers = getNumberOfUsers(); ?>
     <?php $books = getAllBooks(); ?>
-    <?php if (isset($_POST['delete'])) : ?>
+    <?php $users = getUsers(); ?>
+    <?php if (isset($_POST['delete-book'])) : ?>
         <?php $bookId = $_POST['book_id']; ?>
         <?php deleteBook_Author($bookId); ?>
         <?php deleteCart_Item($bookId); ?>
         <?php deleteBook($bookId); ?>
         <?php header('Location: dashboard.php'); ?>
     <?php endif; ?>
-    <?php if(isset($_POST['insert'])):?>
-        <?php 
-            $filename = $_FILES["book_image"]["name"];
-            $tempname = $_FILES["book_image"]["tmp_name"];
-            $folder = "../../images/".$filename;
-            move_uploaded_file($tempname, $folder);
+    <?php if (isset($_POST['insert'])) : ?>
+        <?php
+        $filename = $_FILES["book_image"]["name"];
+        $tempname = $_FILES["book_image"]["tmp_name"];
+        $folder = "../../images/" . $filename;
+        move_uploaded_file($tempname, $folder);
         ?>
-        <?php $bookId = insertBook($_POST['book_name'], $_POST['book_author'], $_POST['book_genre'], $_POST['book_price'], $_POST['book_year'], $filename, $_POST['book_discription']);?>
-        <?php $authorId = get_or_create_Author($_POST['book_author'], $_POST['author_bio']);?>
-        <?php insertBook_Authors($bookId, $authorId);?>
+        <?php $bookId = insertBook($_POST['book_name'], $_POST['book_author'], $_POST['book_genre'], $_POST['book_price'], $_POST['book_year'], $filename, $_POST['book_discription']); ?>
+        <?php $authorId = get_or_create_Author($_POST['book_author'], $_POST['author_bio']); ?>
+        <?php insertBook_Authors($bookId, $authorId); ?>
         <?php header('Location: dashboard.php'); ?>
-    <?php endif;?>
+    <?php endif; ?>
+
+    <?php if (isset($_POST['delete-user'])) : ?>
+        <?php $userId = $_POST['user-id']; ?>
+        <?php deleteUser($userId); ?>
+        <?php header('Location: dashboard.php'); ?>
+    <?php endif; ?>
 
     <div class="sidebar">
         <header>Book Website</header>
@@ -79,7 +87,7 @@
                     <td>
                         <form method="post">
                             <input type="hidden" name="book_id" value="<?php echo $book['book_id']; ?>">
-                            <input type="submit" name="delete" value="X">
+                            <input type="submit" name="delete-book" value="X">
                         </form>
                     </td>
                 </tr>
@@ -91,40 +99,66 @@
             <table>
                 <tr>
                     <th><label for="book_name">Book Name</label></th>
-                    <td><input type="text" autocomplete="0ff" id="book_name" name="book_name" required></td>
+                    <td><input type="text" autocomplete="off" id="book_name" name="book_name" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_author">Book Author</label></th>
-                    <td><input type="text" autocomplete="0ff" id="book_author" name="book_author" required></td>
+                    <td><input type="text" autocomplete="off" id="book_author" name="book_author" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_genre">Book Genre</label></th>
-                    <td><input type="text" autocomplete="0ff" id="book_genre" name="book_genre" required></td>
+                    <td><input type="text" autocomplete="off" id="book_genre" name="book_genre" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_price">Book Price</label></th>
-                    <td><input type="text" autocomplete="0ff" id="book_price" name="book_price" maxlength="4" required></td>
+                    <td><input type="text" autocomplete="off" id="book_price" name="book_price" maxlength="4" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_year">Book Year</label></th>
-                    <td><input type="date" autocomplete="0ff" id="book_year" name="book_year" required></td>
+                    <td><input type="date" autocomplete="off" id="book_year" name="book_year" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_image">Book Image</label></th>
-                    <td><input type="file" autocomplete="0ff" id="book_image" name="book_image" required></td>
+                    <td><input type="file" autocomplete="off" id="book_image" name="book_image" required></td>
                 </tr>
                 <tr>
                     <th><label for="book_discription">Book Discription</label></th>
-                    <td><textarea type="text" autocomplete="0ff" id="book_discription" name="book_discription" rows="1"></textarea></td>
+                    <td><textarea type="text" autocomplete="off" id="book_discription" name="book_discription" rows="2"></textarea></td>
                 </tr>
                 <tr>
                     <th><label for="author_bio">Author Biography</label></th>
-                    <td><input type="text" autocomplete="0ff" id="author_bio" name="author_bio" ></td>
+                    <td><input type="text" autocomplete="off" id="author_bio" name="author_bio"></td>
                 </tr>
             </table>
             <input type="submit" name="insert" value="Insert Book">
         </form>
     </div>
+    <?php if (!empty($users)) : ?>
+        <div class="delete">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                </tr>
+                <?php foreach ($users as $user) : ?>
+                    <tr>
+                        <td><?php echo $user['user_id'] ?></td>
+                        <td><?php echo ucfirst($user['name']) ?></td>
+                        <td><?php echo ucfirst($user['email']) ?></td>
+                        <td><?php echo password_hash($user['password'], PASSWORD_DEFAULT) ?></td>
+                        <td>
+                            <form method="post">
+                                <input type="hidden" name="user-id" value="<?php echo $user['user_id'] ?>">
+                                <input type="submit" name="delete-user" value="X">
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    <?php endif; ?>
 </body>
 
 </html>

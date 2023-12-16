@@ -24,7 +24,7 @@ function getAllBooks(){
     return $books;
 }
 
-// to delete a book
+// ----- to delete a book -----
 // 1- delete him from book_authors table.
 // 2- delete him from cart_items table.
 // 3- delete him from books table.
@@ -54,11 +54,10 @@ function deleteBook($bookId){
     mysqli_query($GLOBALS['con'], $sql);
 }
 
-// to insert a book
+// ----- to insert a book -----
 // 1- insert book to books table
 // 2- insert author to authors table if the author is new
 // 3- insert book and author to book_authors table
-// book_name book_author book_genre book_year book_price book_image book_description author_bio
 
 function insertBook($name, $author, $genre, $price, $year, $image, $desc){
     $sql = <<<SQL
@@ -91,5 +90,44 @@ function insertBook_Authors($bookId, $authorId){
     mysqli_query($GLOBALS['con'], $sql);
 }
 
+function getUsers(){
+    $sql = "SELECT * FROM users WHERE name <> 'admin'";
+    $result = mysqli_query($GLOBALS['con'], $sql);
+    $users = [];
+    while($row = mysqli_fetch_assoc($result)){
+        $users[] =$row; 
+    }
+    return $users;
+}
 
+// ----- to delete user -----
+// 1- delete user items from cart
+// 2- delete user cart
+// 3- delete user himself
+function deleteUser($userId){
+    // delete from cart items table
+    $sql = <<<SQL
+    DELETE FROM cart_items
+    WHERE cart_id IN (
+        SELECT cart_id FROM cart WHERE user_id = '$userId'
+        )
+    SQL;
+    $result = mysqli_query($GLOBALS['con'], $sql);
+    if (!$result) {
+        die("Error deleting cart items: " . mysqli_error($GLOBALS['con']));
+    }
+    // delete from cart table
+    $sql = "DELETE FROM cart WHERE user_id = '$userId'";
+    $result = mysqli_query($GLOBALS['con'], $sql);
+    if (!$result) {
+      die("Error deleting cart: " . mysqli_error($GLOBALS['con']));
+    }
+    // delete from users table
+    $sql = "DELETE FROM users WHERE user_id = '$userId'";
+    $result = mysqli_query($GLOBALS['con'], $sql);
+    if (!$result) {
+      die("Error deleting user: " . mysqli_error($GLOBALS['con']));
+    }
+    return true;
+}
 ?>
