@@ -32,8 +32,8 @@
             <ul>
                 <li><a href=" ../home/home.php">Home </a></il>
                 <li><a href=" ../cart/cart.php">Books Cart</a></il>
-                <li><a href="">About Us </a></il>
-                <li><a href="">Contant </a></il>
+                <li><a href="">Logout</a></il>
+
             </ul>
         </nav>
         <div class="search-box">

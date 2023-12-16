@@ -12,6 +12,14 @@
     <?php
     echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">'
     ?>
+
+    <script>
+        function logout() {
+            <?php ?>
+        }
+    </script>
+
+
 </head>
 
 <body>
@@ -32,6 +40,12 @@
         <?php header("Location: home.php"); ?>
     <?php endif; ?>
 
+    <?php if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'logout') : ?>
+        <?php session_unset(); ?>
+        <?php session_destroy(); ?>
+        <?php echo "<script>window.location.href='../../auth/auth.php';</script>"; ?>
+    <?php endif; ?>
+
 
     <header>
         <div class="logo">
@@ -41,8 +55,7 @@
             <ul>
                 <li><a href=" ../home/home.php">Home </a></il>
                 <li><a href=" ../cart/cart.php">Books Cart</a></il>
-                <li><a href="">About Us </a></il>
-                <li><a href="">Contant </a></il>
+                <li><a href="#" onclick="if(confirm('logout')){window.location.href='<?php echo '../../auth/auth.php?action=logout' ?>'}">Logout</a></li>
             </ul>
         </nav>
         <div class="search-box">
@@ -76,7 +89,7 @@
             </div>
         <?php endforeach; ?>
     </div>
-    
+
 </body>
 
 </html>

@@ -28,8 +28,8 @@
             <ul>
                 <li><a href="../home/home.php">Home </a></il>
                 <li><a href=" ../cart/cart.php">Books Cart</a></il>
-                <li><a href="">About Us </a></il>
-                <li><a href="">Contact</a></il>
+                <li><a href="">Logout</a></il>
+
             </ul>
         </nav>
         <div class="search-box">
@@ -61,7 +61,7 @@
                             <img src="../../images/<?php echo $item['book_image']; ?>" name="book_id" value="<?php echo $item['book_id']; ?>">
                             <div class="product-info">
                                 <h3 class="product-name"><?php echo $item['book_name']; ?></h3>
-                                <h4 class="product-price"><?php echo round($item['book_price']) . "$"; ?></h4>
+                                <p class="product-price">Price :<?php echo round($item['book_price']) . "$"; ?></p>
                                 <p class="product-quantity">Qnt: <input value="1" name="quantity" readonly>
                                 <form method="POST" class="product-remove">
                                     <i class="fa fa-trash" aria-hidden="true"></i>

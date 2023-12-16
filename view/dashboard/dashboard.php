@@ -145,8 +145,8 @@
                 <?php foreach ($users as $user) : ?>
                     <tr>
                         <td><?php echo $user['user_id'] ?></td>
-                        <td><?php echo ucfirst($user['name']) ?></td>
-                        <td><?php echo ucfirst($user['email']) ?></td>
+                        <td><?php echo $user['name'] ?></td>
+                        <td><?php echo $user['email'] ?></td>
                         <td><?php echo password_hash($user['password'], PASSWORD_DEFAULT) ?></td>
                         <td>
                             <form method="post">

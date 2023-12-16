@@ -10,8 +10,8 @@
 
 <body>
     <?php $bookId = $_GET['book_id']; ?>
-    <?php session_start();
-    $userId = $_SESSION['user_id'];  ?>
+    <?php session_start(); ?>
+    <?php $userId = $_SESSION['user_id'];  ?>
     <?php $bookData = getBookBYId($bookId); ?>
     <?php $authorBooks = getAuthorBooks($bookData['book_author']); ?>
     <?php if (isset($_POST['submit'])) : ?>
@@ -41,6 +41,10 @@
                     <th>First Publish</th>
                     <td><?php echo $bookData['book_year']; ?></td>
                 </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><?php echo round($bookData['book_price']) . "$"; ?></td>
+                </tr>
             </table>
             <form method="post">
                 <input class="button" type="submit" name="submit" value="Add To Cart">
@@ -48,17 +52,20 @@
         </div>
 
     </div>
-    <div class="authorcontainer">
-        <h2 class="h2">Other Author Books</h2>
-        <?php foreach ($authorBooks as $book) : ?>
-            <?php if ($bookId != $book['book_id']) : ?>
-                <div class="authorcolumn">
+    <?php if (!empty($authorBooks)) : ?>
+        <div class="authorcontainer">
+            <h2 class="h2">Other Author Books</h2>
+            <?php foreach ($authorBooks as $book) : ?>
+                <?php if ($bookId != $book['book_id']) : ?>
+                    <div class="authorcolumn">
+                        <img src="../../images/<?php echo $book['book_image'] ?>">
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-                    <img src="../../images/<?php echo $book['book_image'] ?>">
-                </div>
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
+
 
 </body>
 
